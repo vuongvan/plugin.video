@@ -1,15 +1,15 @@
-name: Kodi Repo CI
+name: Build Kodi Repository
 
 on:
   push:
     branches:
-      - main  # Chạy mỗi khi bạn push code lên nhánh main
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Setup Python
@@ -17,18 +17,11 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Tools
-        run: |
-          pip install gitpython
+      - name: Run Repo Builder
+        run: python mkrepo.py
 
-      - name: Create Kodi Repository
-        run: |
-          # Tải script hỗ trợ tạo addons.xml và nén zip
-          wget https://raw.githubusercontent.com/xbmc/create-repository/master/create_repository.py
-          python create_repository.py .
-        
-      - name: Deploy to GitHub Pages
+      - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: . # Deploy toàn bộ các file đã build (zip, xml) lên nhánh gh-pages
+          folder: . 
           branch: gh-pages
