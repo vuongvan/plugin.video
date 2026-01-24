@@ -1,5 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <addons>
+  <addon id="repository.kkphim" name="KKPhim Repository" version="1.0.0" provider-name="vuongvan">
+    <extension point="xbmc.addon.repository" name="KKPhim Repository">
+      <dir>
+        <info compressed="false">https://vuongvan.github.io/plugin.video.kkphim/addons.xml</info>
+        <checksum>https://vuongvan.github.io/plugin.video.kkphim/addons.xml.md5</checksum>
+        <datadir zip="true">https://vuongvan.github.io/plugin.video.kkphim/</datadir>
+      </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+      <summary>Kho ứng dụng KKPhim</summary>
+      <description>Cung cấp các bản cập nhật mới nhất cho KKPhim và các addon liên quan.</description>
+      <platform>all</platform>
+      <assets>
+        <icon>icon.png</icon>
+      </assets>
+    </extension>
+  </addon>
   <addon id="plugin.video.kkphim" name="KK Phim" version="1.0.0" provider-name="Gemini">
     <requires>
       <import addon="xbmc.python" version="3.0.0" />
