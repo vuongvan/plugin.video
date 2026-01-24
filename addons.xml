@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<addons>
+  <addon id="plugin.video.kkphim" name="KK Phim" version="1.0.0" provider-name="Gemini">
+    <requires>
+      <import addon="xbmc.python" version="3.0.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+      <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+      <summary lang="vi_VN">Xem phim PhimAPI</summary>
+      <description lang="vi_VN">Hỗ trợ xem phim lẻ, phim bộ, phim mới cập nhật.</description>
+      <platform>all</platform>
+      <assets>
+        <icon>icon.png</icon>
+      </assets>
+    </extension>
+  </addon>
+</addons>
