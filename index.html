@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKPhim Kodi Repository</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 800px; width: 100%; }
+        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #333; margin-bottom: 30px; }
+        h1 { color: #00e676; margin: 0; font-size: 2.5em; }
+        p { color: #aaa; }
+        .addon-card { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; align-items: center; transition: transform 0.2s; border: 1px solid #222; }
+        .addon-card:hover { transform: translateY(-3px); border-color: #00e676; }
+        .addon-icon { width: 64px; height: 64px; border-radius: 12px; margin-right: 20px; background: #333; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .addon-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .addon-info { flex-grow: 1; }
+        .addon-name { font-size: 1.2em; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .addon-version { font-size: 0.9em; color: #00e676; background: rgba(0, 230, 118, 0.1); padding: 2px 8px; border-radius: 4px; }
+        .addon-desc { font-size: 0.9em; color: #bbb; margin-top: 8px; }
+        .btn-download { background: #00e676; color: #000; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; transition: 0.3s; }
+        .btn-download:hover { background: #00c853; }
+        .repo-url { background: #263238; padding: 15px; border-radius: 5px; border-left: 5px solid #00e676; margin-top: 20px; font-family: monospace; font-size: 0.9em; overflow-x: auto; }
+        footer { margin-top: 50px; text-align: center; color: #666; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KKPhim Repository</h1>
+            <p>Kho ứng dụng giải trí dành cho Kodi</p>
+            <div class="repo-url">
+                Link thêm vào File Manager: <br>
+                <span style="color: #ffeb3b;">https://vuongvan.github.io/plugin.video.kkphim/</span>
+            </div>
+        </header>
+
+        <div id="addon-list">
+            <div class="addon-card">
+                <div class="addon-icon"><img src="repository.kkphim/icon.png" onerror="this.src='https://kodi.tv/assets/images/kodi-logo.png'"></div>
+                <div class="addon-info">
+                    <div class="addon-name">repository.kkphim <span class="addon-version">1.0.0</span></div>
+                    <div class="addon-desc">Cài đặt cái này trước để nhận cập nhật tự động.</div>
+                </div>
+                <a href="repository.kkphim/repository.kkphim-1.0.0.zip" class="btn-download">Tải ZIP</a>
+            </div>
+
+            <div class="addon-card">
+                <div class="addon-icon"><img src="plugin.video.kkphim/icon.png" onerror="this.src='https://kodi.tv/assets/images/kodi-logo.png'"></div>
+                <div class="addon-info">
+                    <div class="addon-name">KK Phim <span class="addon-version">1.0.0</span></div>
+                    <div class="addon-desc">Addon xem phim từ nguồn PhimAPI.com</div>
+                </div>
+                <a href="plugin.video.kkphim/plugin.video.kkphim-1.0.0.zip" class="btn-download">Tải ZIP</a>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2026 KKPhim Kodi. Powered by GitHub Pages.
+        </footer>
+    </div>
+</body>
+</html>
