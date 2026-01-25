@@ -23,21 +23,25 @@ jobs:
       - name: Run Repo Builder
         run: python mkrepo.py
 
+      
       - name: Organize Files for Deployment
         run: |
           mkdir publish
           cp addons.xml publish/
           cp addons.xml.md5 publish/
+          # Copy file index.html vào thư mục publish
+          cp index.html publish/ 2>/dev/null || true
+          
+          # Quét tất cả thư mục có addon.xml và copy các file zip/icon bên trong
           for d in */; do
             if [ -f "${d}addon.xml" ]; then
               mkdir -p "publish/${d}"
-              # Copy file zip (bất kể là do script tạo hay có sẵn)
               cp ${d}*.zip "publish/${d}" 2>/dev/null || true
-              # Copy các file ảnh nếu có để hiện thị icon trong Kodi
               cp ${d}icon.png "publish/${d}" 2>/dev/null || true
               cp ${d}fanart.jpg "publish/${d}" 2>/dev/null || true
             fi
           done
+
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
