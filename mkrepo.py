@@ -3,7 +3,6 @@ import os
 import hashlib
 import zipfile
 import xml.etree.ElementTree as ET
-import re
 
 def generate_md5(fname):
     hash_md5 = hashlib.md5()
@@ -47,7 +46,7 @@ def create_kodi_repo():
             version = root.get('version')
             addon_id_xml = root.get('id')
             
-            # Tìm xem có file zip sẵn trong thư mục không (dạng id-version.zip)
+            # Kiểm tra xem có file zip sẵn (đúng id và version) không
             existing_zip = None
             for f in os.listdir(addon_id):
                 if f.endswith('.zip') and version in f:
@@ -55,9 +54,8 @@ def create_kodi_repo():
                     break
             
             if existing_zip:
-                print(f"✔️  Dùng ZIP có sẵn: {addon_id} ({existing_zip})")
+                print(f"✔️ Dùng ZIP có sẵn: {addon_id} ({existing_zip})")
             else:
-                # Nếu không có zip sẵn, tiến hành nén mới
                 zip_name = f"{addon_id_xml}-{version}.zip"
                 zip_path = os.path.join(addon_id, zip_name)
                 print(f"📦 Đang nén mới: {addon_id} (v{version})")
@@ -67,55 +65,24 @@ def create_kodi_repo():
                         for file in files:
                             if not file.endswith('.zip'):
                                 file_path = os.path.join(root_dir, file)
+                                # Cấu trúc chuẩn: ID-Addon/tên-file
                                 arcname = os.path.join(addon_id_xml, os.path.relpath(file_path, addon_id))
                                 zipf.write(file_path, arcname)
                                 
         except Exception as e:
-            print(f"❌ Lỗi xử lý {addon_id}: {e}")
+            print(f"❌ Lỗi xử lý {addon_id}: {str(e)}")
 
-    # Xuất file addons.xml tổng
+    # Tạo file addons.xml tổng hợp
     indent(addons_xml)
     tree_main = ET.ElementTree(addons_xml)
     tree_main.write("addons.xml", encoding="utf-8", xml_declaration=True)
     
-    # Tạo MD5 cho addons.xml
+    # Tạo mã MD5
     with open("addons.xml.md5", "w") as f:
         f.write(generate_md5("addons.xml"))
     
-    print("\n✅ HOÀN TẤT: Cấu trúc Repository đã sẵn sàng!")
+    print("\n✅ HOÀN TẤT!")
 
 if __name__ == "__main__":
     create_kodi_repo()
-                    if not file.endswith('.zip'): # Không nén chính nó
-                        file_path = os.path.join(root_dir, file)
-                        # Đảm bảo cấu trúc trong zip có thư mục mẹ
-                        arcname = os.path.relpath(file_path, os.path.join(addon_id, '..'))
-                        zipf.write(file_path, arcname)
-
-    # Xuất file addons.xml tổng
-    indent(addons_xml)
-    tree_main = ET.ElementTree(addons_xml)
-    tree_main.write("addons.xml", encoding="utf-8", xml_declaration=True)
     
-    # Tạo mã MD5 cho file addons.xml
-    with open("addons.xml.md5", "w") as f:
-        f.write(generate_md5("addons.xml"))
-    print("Hoàn tất: Đã tạo xong addons.xml và addons.xml.md5")
-
-def indent(elem, level=0):
-    i = "\n" + level*"  "
-    if len(elem):
-        if not elem.text or not elem.text.strip():
-            elem.text = i + "  "
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-        for elem in elem:
-            indent(elem, level+1)
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = i
-    else:
-        if level and (not elem.tail or not elem.tail.strip()):
-            elem.tail = i
-
-if __name__ == "__main__":
-    create_kodi_repo()
