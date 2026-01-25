@@ -26,20 +26,18 @@ jobs:
       - name: Organize Files for Deployment
         run: |
           mkdir publish
-          # Copy các file quản lý repo
           cp addons.xml publish/
           cp addons.xml.md5 publish/
-          
-          # Tìm và copy các file ZIP từ các thư mục plugin/repository
-          # Giữ nguyên cấu trúc thư mục để Kodi tìm được file ZIP
-          find . -maxdepth 2 -name "*.zip" -exec cp --parents {} publish/ \;
-          
-          # (Tùy chọn) Copy icon để hiển thị trên web nếu muốn
-          find . -maxdepth 2 -name "icon.png" -exec cp --parents {} publish/ \;
-          
-          # Chuyển các file từ thư mục con ra ngoài nếu cần, 
-          # nhưng chuẩn Kodi thường là: domain.com/plugin.id/plugin.id-ver.zip
-          # Script mkrepo.py của bạn đã tạo zip nằm trong thư mục plugin nên lệnh cp --parents là chuẩn.
+          for d in */; do
+            if [ -f "${d}addon.xml" ]; then
+              mkdir -p "publish/${d}"
+              # Copy file zip (bất kể là do script tạo hay có sẵn)
+              cp ${d}*.zip "publish/${d}" 2>/dev/null || true
+              # Copy các file ảnh nếu có để hiện thị icon trong Kodi
+              cp ${d}icon.png "publish/${d}" 2>/dev/null || true
+              cp ${d}fanart.jpg "publish/${d}" 2>/dev/null || true
+            fi
+          done
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
