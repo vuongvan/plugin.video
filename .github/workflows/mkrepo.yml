@@ -23,15 +23,16 @@ jobs:
       - name: Run Repo Builder
         run: python mkrepo.py
 
-      - name: Organize and Deploy
+      - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .   # Đẩy toàn bộ thư mục gốc (sau khi đã chạy script)
+          folder: . 
           branch: gh-pages
           clean: true
-          # Loại bỏ các file code không cần thiết khỏi gh-pages
+          # Giữ lại các file ZIP và XML, chỉ loại bỏ code thừa
           clean-exclude: |
             .github
             .git
             mkrepo.py
+            *.py
             
