@@ -1,76 +1,70 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons>
-  <addon id="repository.kkphim" name="KKPhim Repository" version="1.0.0" provider-name="vuongvan">
+<addons><addon id="repository.kkphim" name="KKPhim Repository" version="1.0.0" provider-name="vuongvan">
     <extension point="xbmc.addon.repository" name="KKPhim Repository">
-      <dir>
-        <info compressed="false">https://vuongvan.github.io/plugin.video/addons.xml</info>
-        <checksum>https://vuongvan.github.io/plugin.video/addons.xml.md5</checksum>
-        <datadir zip="true">https://vuongvan.github.io/plugin.video/</datadir>
-      </dir>
+        <dir>
+            <info compressed="false">https://vuongvan.github.io/plugin.video/addons.xml</info>
+            <checksum>https://vuongvan.github.io/plugin.video/addons.xml.md5</checksum>
+            <datadir zip="true">https://vuongvan.github.io/plugin.video/</datadir>
+        </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
-      <summary>Kho ứng dụng KKPhim</summary>
-      <description>Cung cấp các bản cập nhật mới nhất cho KKPhim và các addon liên quan.</description>
-      <platform>all</platform>
-      <assets>
-        <icon>icon.png</icon>
-      </assets>
+        <summary>Kho ứng dụng KKPhim</summary>
+        <description>Cung cấp các bản cập nhật mới nhất cho KKPhim và các addon liên quan.</description>
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
     </extension>
-  </addon>
-  <addon id="plugin.video.kkphim" name="KK Phim" version="1.0.3" provider-name="Gemini">
-    <requires>
-      <import addon="xbmc.python" version="3.0.0" />
-    </requires>
+</addon><addon id="plugin.video.kkphim" name="KK Phim" version="1.0.3" provider-name="Gemini">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="vi_VN">Xem phim PhimAPI</summary>
+    <description lang="vi_VN">Hỗ trợ xem phim lẻ, phim bộ, phim mới cập nhật.</description>
+    <platform>all</platform>
+    <assets>
+      <icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon><addon id="plugin.video.ophim" name="OPhim" version="1.0.0" provider-name="Gemini">
+ <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.requests" version="2.25.1" /> </requires>
     <extension point="xbmc.python.pluginsource" library="main.py">
-      <provides>video</provides>
+        <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-      <summary lang="vi_VN">Xem phim PhimAPI</summary>
-      <description lang="vi_VN">Hỗ trợ xem phim lẻ, phim bộ, phim mới cập nhật.</description>
-      <platform>all</platform>
-      <assets>
-        <icon>icon.png</icon>
-      </assets>
+        <platform>all</platform>
+        <summary lang="vi">Xem phim từ OPhim API V1</summary>
+        <description lang="vi">Hỗ trợ xem phim mới, phim bộ, phim lẻ và tìm kiếm trực tuyến.</description>
+        <language>vi</language>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
     </extension>
-  </addon>
-  <addon id="plugin.video.ophim" name="OPhim" version="1.0.0" provider-name="Gemini">
-    <requires>
-      <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.module.requests" version="2.25.1" />
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="main.py">
-      <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-      <platform>all</platform>
-      <summary lang="vi">Xem phim từ OPhim API V1</summary>
-      <description lang="vi">Hỗ trợ xem phim mới, phim bộ, phim lẻ và tìm kiếm trực tuyến.</description>
-      <language>vi</language>
-      <assets>
-        <icon>icon.png</icon>
-        <fanart>fanart.jpg</fanart>
-      </assets>
-    </extension>
-  </addon>
-  <addon id="script.module.requests" name="requests" version="2.25.1+matrix.1" provider-name="Python Software Foundation">
-    <requires>
-      <import addon="xbmc.python" version="3.0.0" />
-      <import addon="script.module.certifi" version="2020.12.05+matrix.1" />
-      <import addon="script.module.chardet" version="4.0.0+matrix.1" />
-      <import addon="script.module.idna" version="2.10.0+matrix.1" />
-      <import addon="script.module.urllib3" version="1.26.4+matrix.1" />
-    </requires>
-    <extension point="xbmc.python.module" library="lib" />
-    <extension point="xbmc.addon.metadata">
-      <summary lang="en_GB">Requests is an elegant and simple HTTP library for Python, built for human beings.</summary>
-      <description lang="en_GB">Requests is an elegant and simple HTTP library for Python, built for human beings.</description>
-      <license>Apache-2.0</license>
-      <platform>all</platform>
-      <website>https://requests.readthedocs.io/</website>
-      <source>https://github.com/psf/requests</source>
-      <assets>
-        <icon>resources/icon.png</icon>
-      </assets>
-    </extension>
-  </addon>
-</addons>
+</addon><addon id="script.module.requests" name="requests" version="2.25.1+matrix.1" provider-name="Python Software Foundation">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.certifi" version="2020.12.05+matrix.1" />
+    <import addon="script.module.chardet" version="4.0.0+matrix.1" />
+    <import addon="script.module.idna" version="2.10.0+matrix.1" />
+    <import addon="script.module.urllib3" version="1.26.4+matrix.1" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Requests is an elegant and simple HTTP library for Python, built for human beings.</summary>
+    <description lang="en_GB">Requests is an elegant and simple HTTP library for Python, built for human beings.</description>
+    <license>Apache-2.0</license>
+    <platform>all</platform>
+    <website>https://requests.readthedocs.io/</website>
+    <source>https://github.com/psf/requests</source>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+  </extension>
+</addon></addons>
