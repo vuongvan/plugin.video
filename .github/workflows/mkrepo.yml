@@ -3,7 +3,7 @@ name: Build Kodi Repository
 on:
   push:
     branches:
-      - main  # Chạy khi bạn push code lên nhánh chính
+      - main
 
 permissions:
   contents: write
@@ -23,68 +23,15 @@ jobs:
       - name: Run Repo Builder
         run: python mkrepo.py
 
-      - name: Organize Files for Deployment
-        run: |
-          mkdir -p publish
-          
-          # 1. Copy các file quản lý repo ở thư mục gốc
-          cp addons.xml publish/ 2>/dev/null || true
-          cp addons.xml.md5 publish/ 2>/dev/null || true
-          cp index.html publish/ 2>/dev/null || true
-
-          # 2. Duyệt qua tất cả thư mục addon để tạo cấu trúc Index
-          for d in */; do
-            d=${d%/} # Xóa dấu gạch chéo cuối tên thư mục
-            
-            # Chỉ xử lý nếu thư mục có file addon.xml và không phải thư mục publish
-            if [ -f "$d/addon.xml" ] && [ "$d" != "publish" ]; then
-              echo "--- Đang xử lý: $d ---"
-              mkdir -p "publish/$d"
-              
-              # Copy các file cần thiết của addon vào thư mục publish tương ứng
-              cp $d/*.zip "publish/$d/" 2>/dev/null || true
-              cp $d/addon.xml "publish/$d/" 2>/dev/null || true
-              cp $d/icon.png "publish/$d/" 2>/dev/null || true
-              cp $d/fanart.jpg "publish/$d/" 2>/dev/null || true
-
-              # TẠO FILE INDEX.HTML TỰ ĐỘNG CHO THƯ MỤC CON
-              # Giúp Kodi File Manager duyệt được file ZIP bên trong
-              cat <<EOF > "publish/$d/index.html"
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Index of /$d/</title>
-    <style>
-        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; padding: 20px; }
-        a { color: #81d4fa; text-decoration: none; font-size: 1.1em; line-height: 2; }
-        a:hover { color: #00e676; text-decoration: underline; }
-        hr { border: 0; border-top: 1px solid #333; margin: 20px 0; }
-    </style>
-</head>
-<body>
-    <h1>Index of /$d/</h1>
-    <hr>
-    <pre>
-<a href="../">../ (Thư mục cha)</a>
-$(for file in publish/$d/*; do
-  fname=$(basename "$file")
-  if [ "$fname" != "index.html" ]; then
-    echo "<a href=\"$fname\">$fname</a>"
-  fi
-done)
-    </pre>
-    <hr>
-</body>
-</html>
-EOF
-            fi
-          done
-
-      - name: Deploy to gh-pages
+      - name: Organize and Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: publish
+          folder: .   # Đẩy toàn bộ thư mục gốc (sau khi đã chạy script)
           branch: gh-pages
           clean: true
-          
+          # Loại bỏ các file code không cần thiết khỏi gh-pages
+          clean-exclude: |
+            .github
+            .git
+            mkrepo.py
+            
