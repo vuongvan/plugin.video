@@ -25,35 +25,35 @@ jobs:
 
       - name: Organize Files for Deployment
         run: |
+          # Tạo thư mục tạm để chứa các file sạch
           mkdir -p publish
           
-          # 1. Copy các file quản lý ở gốc
+          # 1. Copy các file quản lý ở thư mục gốc vào publish
           cp addons.xml publish/ 2>/dev/null || true
           cp addons.xml.md5 publish/ 2>/dev/null || true
           cp index.html publish/ 2>/dev/null || true
 
-          # 2. Quét các thư mục addon và lọc file
+          # 2. Duyệt qua các thư mục addon và chỉ lấy file kết quả
           for d in */; do
             d=${d%/}
+            # Chỉ xử lý thư mục addon và bỏ qua thư mục publish vừa tạo
             if [ -f "$d/addon.xml" ] && [ "$d" != "publish" ]; then
               mkdir -p "publish/$d"
               
-              # CHỈ COPY: ZIP, XML, PNG, JPG, HTML
+              # CHỈ COPY CÁC FILE CẦN CHO KODI:
               cp $d/*.zip "publish/$d/" 2>/dev/null || true
               cp $d/addon.xml "publish/$d/" 2>/dev/null || true
               cp $d/index.html "publish/$d/" 2>/dev/null || true
               cp $d/icon.png "publish/$d/" 2>/dev/null || true
               cp $d/fanart.jpg "publish/$d/" 2>/dev/null || true
               
-              echo "Đã lọc file cho: $d"
+              echo "Đã lọc xong: $d"
             fi
           done
 
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: publish  # Quan trọng: Chỉ deploy thư mục publish
+          folder: publish  # CHỈ ĐẨY NỘI DUNG TRONG THƯ MỤC PUBLISH
           branch: gh-pages
-          clean: true
-          *.py
-            
+          clean: true      # XÓA TOÀN BỘ FILE CŨ TRÊN GH-PAGES KHÔNG CÓ TRONG PUBLISH
