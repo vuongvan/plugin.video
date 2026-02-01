@@ -23,16 +23,37 @@ jobs:
       - name: Run Repo Builder
         run: python mkrepo.py
 
+      - name: Organize Files for Deployment
+        run: |
+          mkdir -p publish
+          
+          # 1. Copy các file quản lý ở gốc
+          cp addons.xml publish/ 2>/dev/null || true
+          cp addons.xml.md5 publish/ 2>/dev/null || true
+          cp index.html publish/ 2>/dev/null || true
+
+          # 2. Quét các thư mục addon và lọc file
+          for d in */; do
+            d=${d%/}
+            if [ -f "$d/addon.xml" ] && [ "$d" != "publish" ]; then
+              mkdir -p "publish/$d"
+              
+              # CHỈ COPY: ZIP, XML, PNG, JPG, HTML
+              cp $d/*.zip "publish/$d/" 2>/dev/null || true
+              cp $d/addon.xml "publish/$d/" 2>/dev/null || true
+              cp $d/index.html "publish/$d/" 2>/dev/null || true
+              cp $d/icon.png "publish/$d/" 2>/dev/null || true
+              cp $d/fanart.jpg "publish/$d/" 2>/dev/null || true
+              
+              echo "Đã lọc file cho: $d"
+            fi
+          done
+
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: . 
+          folder: publish  # Quan trọng: Chỉ deploy thư mục publish
           branch: gh-pages
           clean: true
-          # Giữ lại các file ZIP và XML, chỉ loại bỏ code thừa
-          clean-exclude: |
-            .github
-            .git
-            mkrepo.py
-            *.py
+          *.py
             
